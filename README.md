@@ -53,7 +53,7 @@ HOUSE_PRICE_APP/
 
 ### 1. Clone & Install
 ```bash
-git clone https://github.com/your-username/house-price-prediction.git
+git clone https://github.com/vivekjoshi2006/House-Price-Prediction-App.git
 cd house-price-prediction
 pip install -r requirements.txt
 ```
