@@ -8,24 +8,35 @@ app = Flask(__name__,
             template_folder='../templates', 
             static_folder='../static')
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_PATH = os.getcwd()
 
-def get_model_path(filename):
-    return os.path.join(BASE_DIR, 'models', filename)
+def load_pkl(filename):
+    paths_to_check = [
+        os.path.join(ROOT_PATH, 'models', filename),
+        os.path.join(ROOT_PATH, filename),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'models', filename))
+    ]
+    for path in paths_to_check:
+        if os.path.exists(path):
+            return joblib.load(path)
+    raise FileNotFoundError(f"Could not find {filename} in any known directory")
 
 try:
-    model = joblib.load(get_model_path("house_model.pkl"))
-    scaler = joblib.load(get_model_path("scaler.pkl"))
-    model_cols = joblib.load(get_model_path("model_columns.pkl"))
+    model = load_pkl("house_model.pkl")
+    scaler = load_pkl("scaler.pkl")
+    model_cols = load_pkl("model_columns.pkl")
 except Exception as e:
-    print(f"Model Load Error: {e}")
+    print(f"CRITICAL MODEL LOAD ERROR: {e}")
     model_cols = [] 
 
 @app.route("/", methods=["GET", "POST"])
 def home():
     prediction = None
     if request.method == "POST":
-        try:           
+        try:
+            if not model_cols:
+                return "Models not loaded correctly on server.", 500
+                
             input_values = [float(request.form.get(col, 0)) for col in model_cols]
             feature_df = pd.DataFrame([input_values], columns=model_cols)
             scaled_features = scaler.transform(feature_df)
@@ -35,3 +46,5 @@ def home():
             prediction = f"Error: {e}"
 
     return render_template("index.html", prediction=prediction, cols=model_cols)
+
+app = app
