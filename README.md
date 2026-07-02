@@ -1,4 +1,4 @@
-# 🏠 SmartPrice AI — House Price Predictor Web App
+# 🏠 SmartPrice AI — House Price Predictor ML Web App
 
 A professional end-to-end Machine Learning web application that predicts real estate prices. This project uses a **Random Forest Regressor** to analyze property features and provide accurate price estimations through a clean, modern user interface.
 
@@ -53,7 +53,7 @@ HOUSE_PRICE_APP/
 
 ### 1. Clone & Install
 ```bash
-git clone https://github.com/vivekjoshi2006/House-Price-Prediction-App.git
+git clone https://github.com/vivekjoshi2006/SmartPrice-AI.git
 cd house-price-prediction
 pip install -r requirements.txt
 ```
