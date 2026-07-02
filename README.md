@@ -1,4 +1,4 @@
-# 🏠 House Price Predictor (ML Web App)
+# 🏠 SmartPrice AI — House Price Predictor Web App
 
 A professional end-to-end Machine Learning web application that predicts real estate prices. This project uses a **Random Forest Regressor** to analyze property features and provide accurate price estimations through a clean, modern user interface.
 
